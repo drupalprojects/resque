@@ -1,0 +1,30 @@
+<?php
+
+/**
+ * @file
+ * Implementation of Resque Drupal Queue.
+ */
+
+/**
+ * Queue resque item.
+ *
+ * @param string $name
+ *   Name of the queue process to queue.
+ * @param array $variables
+ *   Array of variables needed for the queue process.
+ */
+function drupal_resque_queue($name, $variables = array()) {
+  global $conf;
+
+  // Required if redis has a password, and/or on another server.
+  if (!empty($conf['resque_redis_host'])) {
+    if (!empty($conf['resque_redis_password'])) {
+      Resque::setBackend('redis://redis:' . $conf['resque_redis_password'] . '@' . $conf['resque_redis_host']);
+    }
+    else {
+      Resque::setBackend($conf['resque_redis_host']);
+    }
+  }
+
+  Resque::enqueue($name, $name, $variables);
+}
