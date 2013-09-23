@@ -16,7 +16,7 @@ function drupal_resque_requirements($phase) {
   if ($phase == 'runtime') {
     $requirements['php_resque'] = array(
       'title' => $t('PHP Resque library'),
-      'value' => $t('Successful connection to resque.),
+      'value' => $t('Successful connection to resque.'),
       'severity' => REQUIREMENT_OK,
     );
     $libraries = libraries_get_libraries();
@@ -24,7 +24,7 @@ function drupal_resque_requirements($phase) {
     if (isset($libraries['php_resque'])) {
       // Try to connect.
       try {
-        
+        Resque::enqueue('test', 'Test');
       }
       catch (Exception $e) {
         $requirements['php_resque']['value'] = $t('Connection failed with: %error',
@@ -35,7 +35,7 @@ function drupal_resque_requirements($phase) {
       }
     }
     else {
-      $requirements['php_resque']['value'] = $t('Please install php resque in library folder.);
+      $requirements['php_resque']['value'] = $t('Please install php resque in library folder.');
       $requirements['php_resque']['severity'] = REQUIREMENT_ERROR;
     }
   }
