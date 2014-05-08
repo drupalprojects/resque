@@ -1,0 +1,40 @@
+<?php
+/**
+ * @file
+ * Main module file for Resque Drupal Queue.
+ */
+
+/**
+ * Queue item in resque manager.
+ *
+ * @param string $name
+ *   Name of the queue process to queue.
+ * @param array $variables
+ *   Array of variables needed for the queue process.
+ *
+ * @return string
+ *   Token returned from Resque to track job.
+ */
+function drupal_resque_queue($name, $variables = array()) {
+  $token = '';
+
+  $redis_host = variable_get('redis_host', 'localhost');
+  $redis_port = variable_get('redis_port', '6379');
+  $redis_password = variable_get('redis_password', NULL);
+
+  // Required if redis has a password, and/or on another server.
+  if (!empty($redis_password)) {
+    Resque::setBackend('redis://redis:' . $redis_password . '@' . $redis_host . ':' . $redis_port);
+  }
+  else {
+    Resque::setBackend($redis_host . ':' . $redis_port);
+  }
+  try {
+    $token = Resque::enqueue($name, $name, $variables, TRUE);
+  }
+  catch (Exception $e) {
+    return $e;
+  }
+
+  return $token;
+}
