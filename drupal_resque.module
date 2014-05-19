@@ -62,3 +62,17 @@ function drupal_resque_queue($name, $variables = array()) {
 
   return array('token' => $token);
 }
+
+/**
+ * Add a listener to your resque jobs.
+ *
+ * @param string $event_type
+ *   The event type to listen to. (afterEnqueue, onFailure, etc..)
+ * @param string $class
+ *   The class where the listener method lives.
+ * @param string $method
+ *   The name of the listener method.
+ */
+function drupal_resque_add_listener($event_type, $class, $method) {
+  Resque_Event::listen($event_type, array($class, $method));
+}
