@@ -26,13 +26,15 @@ function drupal_resque_menu() {
       'page arguments' => array('drupal_resque_settings'),
       'access arguments' => array('administer site configuration'),
       'file' => 'drupal_resque.admin.inc',
-    )
+    ),
   );
 }
 
 /**
  * Queue item in resque manager.
  *
+ * @param string $queue
+ *   The queue name.
  * @param string $name
  *   Name of the queue process to queue.
  * @param array $variables
@@ -41,7 +43,7 @@ function drupal_resque_menu() {
  * @return array
  *   Token returned from Resque to track job.
  */
-function drupal_resque_queue($name, $variables = array()) {
+function drupal_resque_queue($queue, $name, $variables = array()) {
   $redis_host = variable_get('redis_host', 'localhost');
   $redis_port = variable_get('redis_port', '6379');
   $redis_password = variable_get('redis_password', NULL);
@@ -54,7 +56,7 @@ function drupal_resque_queue($name, $variables = array()) {
     Resque::setBackend($redis_host . ':' . $redis_port);
   }
   try {
-    $token = Resque::enqueue($name, $name, $variables, TRUE);
+    $token = Resque::enqueue($queue, $name, $variables, TRUE);
   }
   catch (Exception $e) {
     return $e;
