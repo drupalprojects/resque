@@ -7,15 +7,17 @@
 /**
  * Queue item in resque manager.
  *
- * @param string $name
- *   Name of the queue process to queue.
+ * @param string $queue
+ *   Name of the queue
+ * @param string $class
+ *   Name of the class used to process job.
  * @param array $variables
  *   Array of variables needed for the queue process.
  *
  * @return string
  *   Token returned from Resque to track job.
  */
-function drupal_resque_queue($name, $variables = array()) {
+function drupal_resque_queue($queue, $class, $variables = array()) {
   $token = '';
 
   $redis_host = variable_get('redis_host', 'localhost');
@@ -30,7 +32,7 @@ function drupal_resque_queue($name, $variables = array()) {
     Resque::setBackend($redis_host . ':' . $redis_port);
   }
   try {
-    $token = Resque::enqueue($name, $name, $variables, TRUE);
+    $token = Resque::enqueue($queue, $class, $variables, TRUE);
   }
   catch (Exception $e) {
     return $e;
