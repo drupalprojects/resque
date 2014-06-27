@@ -46,7 +46,7 @@ class DrupalResque extends SystemQueue implements DrupalQueueInterface {
     }
     $queues = module_invoke_all('cron_queue_info');
     drupal_alter('cron_queue_info', $queues);
-    // Add the worker callback
+    // Add the worker callback.
     $data['worker_callback'] = $queues[$this->name]['worker callback'];
     $token = Resque::enqueue($this->name, $this->className, $data, TRUE);
 
@@ -83,7 +83,7 @@ class DrupalResque extends SystemQueue implements DrupalQueueInterface {
    * @param string $token
    *   The token string returned when creating the job.
    *
-   * @return integer
+   * @return int
    *   https://github.com/chrisboulton/php-resque
    *   1 = STATUS_WAITING
    *   2 = STATUS_RUNNING

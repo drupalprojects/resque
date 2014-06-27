@@ -17,7 +17,7 @@
  * @return string
  *   Token returned from Resque to track job.
  */
-function drupal_resque_queue($queue, $class, $variables = array()) {
+function drupal_resque_queue($queue, $class, array $variables = array()) {
   $token = '';
 
   $redis_host = variable_get('redis_host', 'localhost');
