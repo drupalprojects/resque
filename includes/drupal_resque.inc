@@ -40,14 +40,17 @@ class DrupalResque extends SystemQueue implements DrupalQueueInterface {
   public function createItem($data) {
     $token = NULL;
 
-    // Check to see if class name was specified in the data array.
-    if (!empty($data['class_name'])) {
-      $this->className = $data['class_name'];
-    }
     $queues = module_invoke_all('cron_queue_info');
     drupal_alter('cron_queue_info', $queues);
-    // Add the worker callback.
-    $data['worker_callback'] = $queues[$this->name]['worker callback'];
+
+    // Check to see if class name was specified in the data array.
+    if (!empty($queues[$this->name]['class'])) {
+      $this->className = $queues[$this->name]['class'];
+    }
+    elseif (!empty($queues[$this->name]['worker_callback'])) {
+      // Add the worker callback.
+      $data['worker_callback'] = $queues[$this->name]['worker callback'];
+    }
     $token = Resque::enqueue($this->name, $this->className, $data, TRUE);
 
     return $token;
