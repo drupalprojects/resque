@@ -8,7 +8,7 @@
  * Queue item in resque manager.
  *
  * @param string $queue
- *   Name of the queue
+ *   Name of the queue.
  * @param string $class
  *   Name of the class used to process job.
  * @param array $variables

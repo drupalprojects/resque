@@ -1,29 +1,27 @@
 <?php
 /**
  * @file
- *
  * Contains DrupalResqueUniquePlugin.
  */
 
 /**
- * Using event hooks defined here:
- * https://github.com/resque/resque/blob/master/docs/HOOKS.md
+ * Using event hooks defined in resque library.
  */
 class DrupalResqueUniquePlugin {
   /**
    * Check the job has a unique instance.
    *
    * @param string $class
-   *   string containing the name of scheduled job.
+   *   String containing the name of scheduled job.
    * @param array $arguments
-   *   array of arguments supplied to the job.
+   *   Array of arguments supplied to the job.
    * @param string $queue
-   *   string containing the name of the queue the job was added to.
+   *   String containing the name of the queue the job was added to.
    *
-   * @return boolean
+   * @return bool
    *   Queue up the job if another with the same key doesn't exist.
    */
-  function beforeEnqueue($class, $arguments, $queue) {
+  public function beforeEnqueue($class, array $arguments, $queue) {
     if (Resque::redis()->exists($arguments['drupal_unique_key'])) {
       return FALSE;
     }
@@ -37,9 +35,9 @@ class DrupalResqueUniquePlugin {
    * Clear the unique queue after the job has performed.
    *
    * @param Resque_Job $job
-   *   The job that failed
+   *   The job that failed.
    */
-  function afterPerform(Resque_Job $job) {
+  public function afterPerform(Resque_Job $job) {
     if (Resque::redis()->exists($job->payload['args'][0]['drupal_unique_key'])) {
       Resque::redis()->del($job->payload['args'][0]['drupal_unique_key']);
     }
@@ -48,12 +46,12 @@ class DrupalResqueUniquePlugin {
   /**
    * Clear the unique queue after the job has failed.
    *
-   * @param stdClass $exception
+   * @param object $exception
    *   Exception that occurred.
    * @param Resque_Job $job
-   *   The job that failed
+   *   The job that failed.
    */
-  function onFailure($exception, Resque_Job $job) {
+  public function onFailure($exception, Resque_Job $job) {
     if (Resque::redis()->exists($job->payload['args'][0]['drupal_unique_key'])) {
       Resque::redis()->del($job->payload['args'][0]['drupal_unique_key']);
     }

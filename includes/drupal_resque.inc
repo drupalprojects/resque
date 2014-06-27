@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * Contains DrupalResque
+ * Contains DrupalResque.
  */
 
 class DrupalResque extends SystemQueue implements DrupalQueueInterface {
@@ -10,7 +10,7 @@ class DrupalResque extends SystemQueue implements DrupalQueueInterface {
    *
    * @var string $class_name
    */
-  protected $class_name = 'DrupalResqueBase';
+  protected $className = 'DrupalResqueBase';
 
   /**
    * Setup redis server.
@@ -35,25 +35,20 @@ class DrupalResque extends SystemQueue implements DrupalQueueInterface {
   }
 
   /**
-   * Attempts to create a resque queue item.
-   *
-   * @param array $data
-   *   Arbitrary data to be associated with the new task in the queue.
-   * @return string
-   *   The token to be able to track this item.
+   * {@inheritdoc}
    */
   public function createItem($data) {
     $token = NULL;
 
     // Check to see if class name was specified in the data array.
     if (!empty($data['class_name'])) {
-      $this->class_name = $data['class_name'];
+      $this->className = $data['class_name'];
     }
     $queues = module_invoke_all('cron_queue_info');
     drupal_alter('cron_queue_info', $queues);
     // Add the worker callback
     $data['worker_callback'] = $queues[$this->name]['worker callback'];
-    $token = Resque::enqueue($this->name, $this->class_name, $data, TRUE);
+    $token = Resque::enqueue($this->name, $this->className, $data, TRUE);
 
     return $token;
   }
@@ -64,21 +59,19 @@ class DrupalResque extends SystemQueue implements DrupalQueueInterface {
    * @param string $class_name
    *   The name of the class to process job.
    */
-  function setClassName($class_name) {
-    $this->class_name = $class_name;
+  public function setClassName($class_name) {
+    $this->className = $class_name;
   }
 
   /**
    * Get the name of the class that is processing this job.
    */
-  function getClassName() {
-    return $this->class_name;
+  public function getClassName() {
+    return $this->className;
   }
 
   /**
-   * Get number of items in this particular queue.
-   *
-   * @return array|bool|void
+   * {@inheritdoc}
    */
   public function numberOfItems() {
     return Resque::size($this->name);
@@ -91,7 +84,7 @@ class DrupalResque extends SystemQueue implements DrupalQueueInterface {
    *   The token string returned when creating the job.
    *
    * @return integer
-   *   https://github.com/chrisboulton/php-resque/blob/master/lib/Resque/Job/Status.php
+   *   https://github.com/chrisboulton/php-resque
    *   1 = STATUS_WAITING
    *   2 = STATUS_RUNNING
    *   3 = STATUS_FAILED
@@ -102,23 +95,35 @@ class DrupalResque extends SystemQueue implements DrupalQueueInterface {
     return $status->get();
   }
 
+  /**
+   * {@inheritdoc}
+   */
   public function claimItem($lease_time = 300) {
-    // Not implemented
+    // Not implemented.
     return FALSE;
   }
 
+  /**
+   * {@inheritdoc}
+   */
   public function releaseItem($item) {
-    // Not implemented
+    // Not implemented.
     return TRUE;
   }
 
+  /**
+   * {@inheritdoc}
+   */
   public function deleteItem($item) {
-    // Not implemented
+    // Not implemented.
     return TRUE;
   }
 
+  /**
+   * {@inheritdoc}
+   */
   public function deleteQueue() {
-    // Not implemented
+    // Not implemented.
     return TRUE;
   }
-} 
+}

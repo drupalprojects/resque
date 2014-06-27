@@ -6,8 +6,9 @@
 
 /**
  * Implement this interface to use your own classes to run your jobs.
- * Modeled after https://github.com/chrisboulton/php-resque and
- * https://github.com/resque/resque
+ *
+ * Modelled after https://github.com/chrisboulton/php-resque and
+ * https://github.com/resque/resque.
  */
 interface DrupalResqueInterface {
   /**
@@ -16,7 +17,7 @@ interface DrupalResqueInterface {
   public function setUp();
 
   /**
-   * This is the method where you can use your jobs arguments to perform your tasks.
+   * This is the method where you can use your jobs arguments to perform tasks.
    */
   public function perform();
 }
