@@ -6,9 +6,9 @@ by Arturo Contreras, arturo.kontreras@gmail.com
 This module makes use of an existing php resque implementation:
 https://github.com/chrisboulton/php-resque
 
-This module extends DrupalQueue to be able to use DrupalResque instead, also being
-able to use DrupalResqueUnique so that jobs with the same payload key are not
-queued at any point in time.
+This module extends DrupalQueue to be able to use DrupalResque instead, also
+being able to use DrupalResqueUnique so that jobs with the same payload key are
+not queued at any point in time.
 
 This README is for interested developers.
 
