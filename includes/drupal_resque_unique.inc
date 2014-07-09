@@ -13,7 +13,7 @@ class DrupalResqueUnique extends DrupalResque implements UniqueQueueInterface {
 
     // Check to see if class name was specified in the data array.
     if (!empty($data['class_name'])) {
-      $this->class_name = $data['class_name'];
+      $this->className = $data['class_name'];
     }
     $queues = module_invoke_all('cron_queue_info');
     drupal_alter('cron_queue_info', $queues);
@@ -24,7 +24,7 @@ class DrupalResqueUnique extends DrupalResque implements UniqueQueueInterface {
       'beforeEnqueue',
       array('DrupalResqueUniquePlugin', 'beforeEnqueue')
     );
-    $token = Resque::enqueue($this->name, $this->class_name, $data, TRUE);
+    $token = Resque::enqueue($this->name, $this->className, $data, TRUE);
 
     return $token;
   }
