@@ -2,15 +2,15 @@
 
 /**
  * @file
- * Main module file for Resque Drupal Queue.
+ * Main module file for Resque module.
  */
 
 /**
  * Implements hook_help().
  */
-function drupal_resque_help($path, $arg) {
+function resque_help($path, $arg) {
   switch ($path) {
-    case 'admin/help#drupal_resque':
+    case 'admin/help#resque':
       return '<p>' . t('Flexible way to define queue items with php resque.') . '</p>';
   }
 }
@@ -18,14 +18,14 @@ function drupal_resque_help($path, $arg) {
 /**
  * Implements hook_menu().
  */
-function drupal_resque_menu() {
+function resque_menu() {
   return array(
-    'admin/settings/drupal_resque' => array(
-      'title' => 'Drupal Resque',
+    'admin/settings/resque' => array(
+      'title' => 'Resque',
       'page callback' => 'drupal_get_form',
-      'page arguments' => array('drupal_resque_settings'),
+      'page arguments' => array('resque_settings'),
       'access arguments' => array('administer site configuration'),
-      'file' => 'drupal_resque.admin.inc',
+      'file' => 'resque.admin.inc',
     ),
   );
 }
@@ -43,7 +43,7 @@ function drupal_resque_menu() {
  * @return array
  *   Token returned from Resque to track job.
  */
-function drupal_resque_queue($queue, $name, $variables = array()) {
+function resque_queue($queue, $name, $variables = array()) {
   $redis_host = variable_get('redis_host', 'localhost');
   $redis_port = variable_get('redis_port', '6379');
   $redis_password = variable_get('redis_password', NULL);
@@ -75,6 +75,6 @@ function drupal_resque_queue($queue, $name, $variables = array()) {
  * @param string $method
  *   The name of the listener method.
  */
-function drupal_resque_add_listener($event_type, $class, $method) {
+function resque_add_listener($event_type, $class, $method) {
   Resque_Event::listen($event_type, array($class, $method));
 }

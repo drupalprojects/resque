@@ -1,4 +1,4 @@
-name = "Drupal Resque""
+name = "Resque""
 description = Resque queue backend.
-version = 0.1
+version = 6.x-1.x
 core = 6.x

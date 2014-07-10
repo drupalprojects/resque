@@ -2,13 +2,13 @@
 
 /**
  * @file
- * Drupal resque administration and server settings.
+ * Resque administration and server settings.
  */
 
 /**
  * Settings form builder callback.
  */
-function drupal_resque_settings() {
+function resque_settings() {
 
   $form['redis_host'] = array(
     '#type' => 'textfield',
