@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Install file for resque module.
+ * Install file for Resque module.
  */
 
 /**
@@ -15,8 +15,8 @@ function resque_requirements($phase) {
 
   if ($phase == 'runtime') {
     $requirements['php_resque'] = array(
-      'title' => $t('PHP Resque library'),
-      'value' => $t('Successful connection to resque.'),
+      'title' => $t('php-resque library'),
+      'value' => $t('Successful connection to Resque.'),
       'severity' => REQUIREMENT_OK,
     );
     $libraries = libraries_get_libraries();
@@ -35,7 +35,7 @@ function resque_requirements($phase) {
       }
     }
     else {
-      $requirements['php_resque']['value'] = $t('Please install php resque in library folder.');
+      $requirements['php_resque']['value'] = $t('Please install php-resque in library folder.');
       $requirements['php_resque']['severity'] = REQUIREMENT_ERROR;
     }
   }
