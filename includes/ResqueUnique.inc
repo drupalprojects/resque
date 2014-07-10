@@ -1,10 +1,10 @@
 <?php
 /**
  * @file
- * Contains DrupalResqueUnique.
+ * Contains ResqueUnique.
  */
 
-class DrupalResqueUnique extends DrupalResque implements UniqueQueueInterface {
+class ResqueUnique extends Resque implements UniqueQueueInterface {
   /**
    * {@inheritdoc}
    */
@@ -22,7 +22,7 @@ class DrupalResqueUnique extends DrupalResque implements UniqueQueueInterface {
     $data['drupal_unique_key'] = $this->name . ':' . $key;
     Resque_Event::listen(
       'beforeEnqueue',
-      array('DrupalResqueUniquePlugin', 'beforeEnqueue')
+      array('ResqueUniquePlugin', 'beforeEnqueue')
     );
     $token = Resque::enqueue($this->name, $this->className, $data, TRUE);
 

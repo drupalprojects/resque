@@ -1,16 +1,16 @@
 <?php
 /**
  * @file
- * Contains DrupalResque.
+ * Contains Resque.
  */
 
-class DrupalResque extends SystemQueue implements DrupalQueueInterface {
+class Resque extends SystemQueue implements DrupalQueueInterface {
   /**
-   * Class name that will process jobs, defaults to DrupalResqueBase.
+   * Class name that will process jobs, defaults to ResqueBase.
    *
    * @var string $class_name
    */
-  protected $className = 'DrupalResqueBase';
+  protected $className = 'ResqueBase';
 
   /**
    * Setup redis server.

@@ -63,8 +63,8 @@ if(!empty($PREFIX)) {
 $queues = explode(',', $QUEUE);
 
 // Listen for unique queues so that we can remove the queue once the job processes.
-Resque_Event::listen('afterPerform', array('DrupalResqueUniquePlugin', 'afterPerform'));
-Resque_Event::listen('onFailure', array('DrupalResqueUniquePlugin', 'onFailure'));
+Resque_Event::listen('afterPerform', array('ResqueUniquePlugin', 'afterPerform'));
+Resque_Event::listen('onFailure', array('ResqueUniquePlugin', 'onFailure'));
 $worker = new Resque_Worker($queues);
 
 $PIDFILE = getenv('PIDFILE');

@@ -1,16 +1,16 @@
 <?php
 /**
  * @file
- * Contains DrupalResqueInterface, DrupalResqueAbstract.
+ * Contains ResqueInterface, ResqueAbstract.
  */
 
 /**
  * Implement this interface to use your own classes to run your jobs.
  *
- * Modelled after https://github.com/chrisboulton/php-resque and
+ * Modeled after https://github.com/chrisboulton/php-resque and
  * https://github.com/resque/resque.
  */
-interface DrupalResqueInterface {
+interface ResqueInterface {
   /**
    * This will always run before the perform method.
    */
@@ -25,7 +25,7 @@ interface DrupalResqueInterface {
 /**
  * Abstract class that implements resque interface.
  */
-abstract class DrupalResqueAbstract implements DrupalResqueInterface {
+abstract class ResqueAbstract implements ResqueInterface {
   /**
    * {@inheritdoc}
    */

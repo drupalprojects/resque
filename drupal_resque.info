@@ -1,8 +1,0 @@
-name = Drupal Resque
-description = Resque queue backend.
-core = 7.x
-files[] = includes/drupal_resque.inc
-files[] = includes/drupal_resque_base.inc
-files[] = includes/drupal_resque_interface.inc
-files[] = includes/drupal_resque_unique.inc
-files[] = includes/drupal_resque_unique_plugin.inc

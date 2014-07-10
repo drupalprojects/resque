@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * Contains DrupalResqueUniquePlugin.
+ * Contains ResqueUniquePlugin.
  */
 
 /**
  * Using event hooks defined in resque library.
  */
-class DrupalResqueUniquePlugin {
+class ResqueUniquePlugin {
   /**
    * Check the job has a unique instance.
    *
