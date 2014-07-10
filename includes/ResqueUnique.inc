@@ -17,6 +17,7 @@ class ResqueUnique extends Resque implements UniqueQueueInterface {
     }
     $queues = module_invoke_all('cron_queue_info');
     drupal_alter('cron_queue_info', $queues);
+
     // Add the worker callback.
     $data['worker_callback'] = $queues[$this->name]['worker callback'];
     $data['drupal_unique_key'] = $this->name . ':' . $key;

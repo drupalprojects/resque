@@ -87,11 +87,13 @@ class Resque extends SystemQueue implements DrupalQueueInterface {
    *   The token string returned when creating the job.
    *
    * @return int
-   *   https://github.com/chrisboulton/php-resque
-   *   1 = STATUS_WAITING
-   *   2 = STATUS_RUNNING
-   *   3 = STATUS_FAILED
-   *   4 = STATUS_COMPLETE
+   *   The job status. Possible values are:
+   *     1 = STATUS_WAITING
+   *     2 = STATUS_RUNNING
+   *     3 = STATUS_FAILED
+   *     4 = STATUS_COMPLETE
+   *
+   * @see https://github.com/chrisboulton/php-resque
    */
   public function getJobStatus($token) {
     $status = new Resque_Job_Status($token);
