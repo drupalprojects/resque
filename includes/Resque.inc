@@ -13,7 +13,7 @@ class Resque extends SystemQueue implements DrupalQueueInterface {
   protected $className = 'ResqueBase';
 
   /**
-   * Setup redis server.
+   * Setup Redis server.
    *
    * @param string $name
    *   The name of the queue.
@@ -25,7 +25,7 @@ class Resque extends SystemQueue implements DrupalQueueInterface {
     $redis_port = variable_get('redis_port', '6379');
     $redis_password = variable_get('redis_password', NULL);
 
-    // Required if redis has a password, and/or on another server.
+    // Required if Redis has a password, and/or on another server.
     if (!empty($redis_password)) {
       Resque::setBackend('redis://redis:' . $redis_password . '@' . $redis_host . ':' . $redis_port);
     }

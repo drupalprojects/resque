@@ -28,7 +28,7 @@ This README is for interested developers.
     the variable, e.g. variable_set('queue_default_class', 'DrupalResque').
     You can also set the class to use for a particular queue by setting that
     variable, like ('queue_class_update_fetch_tasks', 'DrupalResque').
-  * I recommend installing the resque gem
+  * I recommend installing the Resque gem
     https://github.com/resque/resque/tree/1-x-stable so that you can startup
     the web interface and look at queued jobs or you can also use
     https://github.com/resque/resque-web

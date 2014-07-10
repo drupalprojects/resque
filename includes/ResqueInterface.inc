@@ -23,7 +23,7 @@ interface ResqueInterface {
 }
 
 /**
- * Abstract class that implements resque interface.
+ * Abstract class that implements Resque interface.
  */
 abstract class ResqueAbstract implements ResqueInterface {
   /**

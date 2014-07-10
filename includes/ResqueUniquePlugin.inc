@@ -5,7 +5,7 @@
  */
 
 /**
- * Using event hooks defined in resque library.
+ * Using event hooks defined in the php-resque library.
  */
 class ResqueUniquePlugin {
   /**
