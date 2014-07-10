@@ -6,7 +6,9 @@
  */
 
 /**
- * Settings form builder callback.
+ * Form constructor for the Resque settings form.
+ *
+ * @ingroup forms
  */
 function resque_settings() {
 
