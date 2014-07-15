@@ -1,4 +1,8 @@
 name = Resque
 description = Resque queue backend.
 core = 7.x
-dependencies[] = xautoload
+files[] = includes/Resque.inc
+files[] = includes/ResqueBase.inc
+files[] = includes/ResqueInterface.inc
+files[] = includes/ResqueUnique.inc
+files[] = includes/ResqueUniquePlugin.inc
