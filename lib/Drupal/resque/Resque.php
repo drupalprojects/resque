@@ -1,8 +1,15 @@
 <?php
 /**
  * @file
- * Contains Resque.
+ * Contains Drupal\resque\Resque.
  */
+
+namespace Drupal\resque;
+
+use SystemQueue;
+use DrupalQueueInterface;
+use Resque as Php_Resque;
+use Resque_Job_Status;
 
 class Resque extends SystemQueue implements DrupalQueueInterface {
   /**
@@ -10,7 +17,7 @@ class Resque extends SystemQueue implements DrupalQueueInterface {
    *
    * @var string $class_name
    */
-  protected $className = 'ResqueBase';
+  protected $className = 'Drupal\resque\Base';
 
   /**
    * Setup Redis server.
@@ -27,10 +34,10 @@ class Resque extends SystemQueue implements DrupalQueueInterface {
 
     // Required if Redis has a password, and/or on another server.
     if (!empty($redis_password)) {
-      Resque::setBackend('redis://redis:' . $redis_password . '@' . $redis_host . ':' . $redis_port);
+      Php_Resque::setBackend('redis://redis:' . $redis_password . '@' . $redis_host . ':' . $redis_port);
     }
     else {
-      Resque::setBackend($redis_host . ':' . $redis_port);
+      Php_Resque::setBackend($redis_host . ':' . $redis_port);
     }
   }
 
@@ -51,7 +58,7 @@ class Resque extends SystemQueue implements DrupalQueueInterface {
       // Add the worker callback.
       $data['worker_callback'] = $queues[$this->name]['worker callback'];
     }
-    $token = Resque::enqueue($this->name, $this->className, $data, TRUE);
+    $token = Php_Resque::enqueue($this->name, $this->className, $data, TRUE);
 
     return $token;
   }
@@ -77,7 +84,7 @@ class Resque extends SystemQueue implements DrupalQueueInterface {
    * {@inheritdoc}
    */
   public function numberOfItems() {
-    return Resque::size($this->name);
+    return Php_Resque::size($this->name);
   }
 
   /**

@@ -1,13 +1,18 @@
 <?php
 /**
  * @file
- * Contains ResqueUniquePlugin.
+ * Contains Drupal\resque\UniquePlugin.
  */
+
+namespace Drupal\resque;
+
+use Resque as Php_Resque;
+use Resque_Job;
 
 /**
  * Using event hooks defined in the php-resque library.
  */
-class ResqueUniquePlugin {
+class UniquePlugin {
   /**
    * Check the job has a unique instance.
    *
@@ -21,12 +26,12 @@ class ResqueUniquePlugin {
    * @return bool
    *   Queue up the job if another with the same key doesn't exist.
    */
-  public function beforeEnqueue($class, array $arguments, $queue) {
-    if (Resque::redis()->exists($arguments['drupal_unique_key'])) {
+  public static function beforeEnqueue($class, array $arguments, $queue) {
+    if (Php_Resque::redis()->exists($arguments['drupal_unique_key'])) {
       return FALSE;
     }
 
-    Resque::redis()->set($arguments['drupal_unique_key'], '1');
+    Php_Resque::redis()->set($arguments['drupal_unique_key'], '1');
 
     return TRUE;
   }
@@ -37,9 +42,9 @@ class ResqueUniquePlugin {
    * @param Resque_Job $job
    *   The job that failed.
    */
-  public function afterPerform(Resque_Job $job) {
-    if (Resque::redis()->exists($job->payload['args'][0]['drupal_unique_key'])) {
-      Resque::redis()->del($job->payload['args'][0]['drupal_unique_key']);
+  public static function afterPerform(Resque_Job $job) {
+    if (Php_Resque::redis()->exists($job->payload['args'][0]['drupal_unique_key'])) {
+      Php_Resque::redis()->del($job->payload['args'][0]['drupal_unique_key']);
     }
   }
 
@@ -51,9 +56,9 @@ class ResqueUniquePlugin {
    * @param Resque_Job $job
    *   The job that failed.
    */
-  public function onFailure($exception, Resque_Job $job) {
-    if (Resque::redis()->exists($job->payload['args'][0]['drupal_unique_key'])) {
-      Resque::redis()->del($job->payload['args'][0]['drupal_unique_key']);
+  public static function onFailure($exception, Resque_Job $job) {
+    if (Php_Resque::redis()->exists($job->payload['args'][0]['drupal_unique_key'])) {
+      Php_Resque::redis()->del($job->payload['args'][0]['drupal_unique_key']);
     }
   }
 }

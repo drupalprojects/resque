@@ -1,8 +1,14 @@
 <?php
 /**
  * @file
- * Contains ResqueUnique.
+ * Contains Drupal\resque\Unique.
  */
+
+namespace Drupal\resque;
+
+use UniqueQueueInterface;
+use Resque_Event;
+use Resque as Php_Resque;
 
 class ResqueUnique extends Resque implements UniqueQueueInterface {
   /**
@@ -23,9 +29,9 @@ class ResqueUnique extends Resque implements UniqueQueueInterface {
     $data['drupal_unique_key'] = $this->name . ':' . $key;
     Resque_Event::listen(
       'beforeEnqueue',
-      array('ResqueUniquePlugin', 'beforeEnqueue')
+      array('Drupal\resque\UniquePlugin', 'beforeEnqueue')
     );
-    $token = Resque::enqueue($this->name, $this->className, $data, TRUE);
+    $token = Php_Resque::enqueue($this->name, $this->className, $data, TRUE);
 
     return $token;
   }

@@ -6,9 +6,9 @@ by Arturo Contreras, arturo.kontreras@gmail.com
 This module makes use of an existing php resque implementation:
 https://github.com/chrisboulton/php-resque
 
-This module extends DrupalQueue to be able to use DrupalResque instead, also
-being able to use DrupalResqueUnique so that jobs with the same payload key are
-not queued at any point in time.
+This module extends DrupalQueue to be able to use Drupal\resque\Resque instead,
+also being able to use Drupal\resque\ResqueUnique so that jobs with the same
+payload key are not queued at any point in time.
 
 This README is for interested developers.
 
@@ -25,9 +25,9 @@ This README is for interested developers.
 --------------------------------------------------------------------------------
 
   * In order for drupal to start using your new queue mechanism you need to set
-    the variable, e.g. variable_set('queue_default_class', 'DrupalResque').
+    the variable, e.g. variable_set('queue_default_class', 'Drupal\resque\Resque').
     You can also set the class to use for a particular queue by setting that
-    variable, like ('queue_class_update_fetch_tasks', 'DrupalResque').
+    variable, like ('queue_class_update_fetch_tasks', 'Drupal\resque\Resque').
   * I recommend installing the Resque gem
     https://github.com/resque/resque/tree/1-x-stable so that you can startup
     the web interface and look at queued jobs or you can also use

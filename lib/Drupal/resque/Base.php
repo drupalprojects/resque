@@ -1,10 +1,12 @@
 <?php
 /**
  * @file
- * Contains ResqueBase.
+ * Contains Drupal\resque\Base.
  */
 
-class ResqueBase extends ResqueAbstract {
+namespace Drupal\resque;
+
+class Base extends Job {
   /**
    * {@inheritdoc}
    */
