@@ -54,7 +54,7 @@ class Resque extends SystemQueue implements DrupalQueueInterface {
     if (!empty($queues[$this->name]['class'])) {
       $this->className = $queues[$this->name]['class'];
     }
-    elseif (!empty($queues[$this->name]['worker_callback'])) {
+    elseif (!empty($queues[$this->name]['worker callback'])) {
       // Add the worker callback.
       $data['worker_callback'] = $queues[$this->name]['worker callback'];
     }

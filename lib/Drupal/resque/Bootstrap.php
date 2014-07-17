@@ -1,9 +1,7 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: atkon
- * Date: 7/14/14
- * Time: 4:06 PM
+ * @file
+ * Contains Drupal\resque\Bootstrap.
  */
 
 namespace Drupal\resque;
