@@ -1,49 +1,23 @@
 <?php
-
 /**
  * @file
- * Main module file for Resque module.
+ * Main module file for Resque Drupal Queue.
  */
-
-/**
- * Implements hook_help().
- */
-function resque_help($path, $arg) {
-  switch ($path) {
-    case 'admin/help#resque':
-      return '<p>' . t('Flexible way to define queue items with php-resque.') . '</p>';
-  }
-}
-
-/**
- * Implements hook_menu().
- */
-function resque_menu() {
-  return array(
-    'admin/settings/resque' => array(
-      'title' => 'Resque',
-      'page callback' => 'drupal_get_form',
-      'page arguments' => array('resque_settings'),
-      'access arguments' => array('administer site configuration'),
-      'file' => 'resque.admin.inc',
-    ),
-  );
-}
 
 /**
  * Queue item in Resque manager.
  *
  * @param string $queue
  *   The queue name.
- * @param string $name
- *   Name of the queue process to queue.
+ * @param string $class
+ *   Class that will process this item.
  * @param array $variables
  *   Array of variables needed for the queue process.
  *
  * @return array
  *   Token returned from Resque to track job within queue.
  */
-function resque_queue($queue, $name, $variables = array()) {
+function resque_queue($queue, $class, $variables = array()) {
   $redis_host = variable_get('redis_host', 'localhost');
   $redis_port = variable_get('redis_port', '6379');
   $redis_password = variable_get('redis_password', NULL);
@@ -56,7 +30,7 @@ function resque_queue($queue, $name, $variables = array()) {
     Resque::setBackend($redis_host . ':' . $redis_port);
   }
   try {
-    $token = Resque::enqueue($queue, $name, $variables, TRUE);
+    $token = Resque::enqueue($queue, $class, $variables, TRUE);
   }
   catch (Exception $e) {
     return $e;
@@ -78,3 +52,4 @@ function resque_queue($queue, $name, $variables = array()) {
 function resque_add_listener($event_type, $class, $method) {
   Resque_Event::listen($event_type, array($class, $method));
 }
+
