@@ -20,8 +20,8 @@ class ResqueUnique extends Resque {
     drupal_alter('cron_queue_info', $queues);
 
     // Check to see if class name was specified in the data array.
-    if (!empty($data['class_name'])) {
-      $this->className = $data['class_name'];
+    if (!empty($queues[$this->name]['class'])) {
+      $this->className = $queues[$this->name]['class'];
     }
     elseif (!empty($data['worker_callback'])) {
       // Add the worker callback.
