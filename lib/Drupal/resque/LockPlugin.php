@@ -10,6 +10,15 @@ use Resque as Php_Resque;
 use Resque_Job_DontPerform;
 
 class LockPlugin {
+ /**
+   * Check if the job can acquire the processing lock.
+   *
+   * @param object $job
+   *   The resque job
+   *
+   * @return bool
+   *   True, if the job was acquired.
+   */
   public static function beforePerform(Resque_Job $job) {
     if (Php_Resque::redis()->exists($job['args']['drupal_unique_key'])) {
       if ($job['requeue']) {

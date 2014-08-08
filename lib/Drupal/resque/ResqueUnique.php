@@ -6,11 +6,10 @@
 
 namespace Drupal\resque;
 
-use UniqueQueueInterface;
 use Resque_Event;
 use Resque as Php_Resque;
 
-class ResqueUnique extends Resque implements UniqueQueueInterface {
+class ResqueUnique extends Resque {
   /**
    * {@inheritdoc}
    */
