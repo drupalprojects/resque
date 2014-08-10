@@ -6,7 +6,7 @@
 
 namespace Drupal\resque;
 
-use Resque;
+use Resque as Php_Resque;
 use Resque_Job;
 
 class LockUnique extends Resque {
@@ -29,7 +29,7 @@ class LockUnique extends Resque {
     }
     $data['drupal_unique_key'] = $this->name . ':' . $key;
 
-    return Resque::enqueue($this->name, $this->className, $data, TRUE);
+    return Php_Resque::enqueue($this->name, $this->className, $data, TRUE);
   }
 
   /**
@@ -39,8 +39,8 @@ class LockUnique extends Resque {
    *   The job that failed.
    */
   public static function afterPerform(Resque_Job $job) {
-    if (Resque::redis()->exists($job->payload['args'][0]['drupal_unique_key'])) {
-      Resque::redis()->del($job->payload['args'][0]['drupal_unique_key']);
+    if (Php_Resque::redis()->exists($job->payload['args'][0]['drupal_unique_key'])) {
+      Php_Resque::redis()->del($job->payload['args'][0]['drupal_unique_key']);
     }
   }
 
@@ -53,8 +53,8 @@ class LockUnique extends Resque {
    *   The job that failed.
    */
   public static function onFailure($exception, Resque_Job $job) {
-    if (Resque::redis()->exists($job->payload['args'][0]['drupal_unique_key'])) {
-      Resque::redis()->del($job->payload['args'][0]['drupal_unique_key']);
+    if (Php_Resque::redis()->exists($job->payload['args'][0]['drupal_unique_key'])) {
+      Php_Resque::redis()->del($job->payload['args'][0]['drupal_unique_key']);
     }
   }
 }

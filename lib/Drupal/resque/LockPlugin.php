@@ -6,7 +6,7 @@
 
 namespace Drupal\resque;
 
-use Resque;
+use Resque as Php_Resque;
 use Resque_Job;
 
 class LockPlugin {
@@ -21,9 +21,9 @@ class LockPlugin {
    *   True, if the job was acquired, else false and requeue the job.
    */
   public static function beforePerform(Resque_Job $job) {
-    if (Resque::redis()->exists($job->payload['args'][0]['drupal_unique_key'])) {
+    if (Php_Resque::redis()->exists($job->payload['args'][0]['drupal_unique_key'])) {
       if ($job->payload['args'][0]['requeue']) {
-        Resque::enqueue($job->queue, $job->payload['class'], $job->payload['args'][0], TRUE);
+        Php_Resque::enqueue($job->queue, $job->payload['class'], $job->payload['args'][0], TRUE);
         return FALSE;
       }
       else {
@@ -31,7 +31,7 @@ class LockPlugin {
       }
     }
     else {
-      Resque::redis()->set($job->payload['args'][0]['drupal_unique_key'], '1');
+      Php_Resque::redis()->set($job->payload['args'][0]['drupal_unique_key'], '1');
       return TRUE;
     }
   }
@@ -44,8 +44,8 @@ class LockPlugin {
    *   The job that failed.
    */
   public static function afterPerform(Resque_Job $job) {
-    if (Resque::redis()->exists($job->payload['args'][0]['drupal_unique_key'])) {
-      Resque::redis()->del($job->payload['args'][0]['drupal_unique_key']);
+    if (Php_Resque::redis()->exists($job->payload['args'][0]['drupal_unique_key'])) {
+      Php_Resque::redis()->del($job->payload['args'][0]['drupal_unique_key']);
     }
   }
 
@@ -58,8 +58,8 @@ class LockPlugin {
    *   The job that failed.
    */
   public static function onFailure($exception, Resque_Job $job) {
-    if (Resque::redis()->exists($job->payload['args'][0]['drupal_unique_key'])) {
-      Resque::redis()->del($job->payload['args'][0]['drupal_unique_key']);
+    if (Php_Resque::redis()->exists($job->payload['args'][0]['drupal_unique_key'])) {
+      Php_Resque::redis()->del($job->payload['args'][0]['drupal_unique_key']);
     }
   }
 }
