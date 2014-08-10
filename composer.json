@@ -1,4 +1,6 @@
 {
+    "name": "drupalprojects/resque",
+    "description": "This module extends DrupalQueue to be able to use DrupalResque instead.",
     "license": "GPL-2.0",
     "type": "library",
     "autoload": {
