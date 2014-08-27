@@ -37,10 +37,10 @@ class LockPlugin {
     else {
       if ($job->payload['args'][0]['requeue']) {
         Php_Resque::enqueue($job->queue, $job->payload['class'], $job->payload['args'][0], TRUE);
-        throw new Resque_Job_DontPerform;
+        throw new Resque_Job_DontPerform();
       }
       else {
-        throw new Resque_Job_DontPerform;
+        throw new Resque_Job_DontPerform();
       }
     }
   }
