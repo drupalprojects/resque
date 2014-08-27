@@ -38,3 +38,18 @@ function resque_queue($queue, $class, $variables = array()) {
 
   return array('token' => $token);
 }
+
+/**
+ * Add a listener to Resque jobs.
+ *
+ * @param string $event_type
+ *   The event type to listen to. (afterEnqueue, onFailure, etc..)
+ * @param string $class
+ *   The class where the listener method lives.
+ * @param string $method
+ *   The name of the listener method.
+ */
+function resque_add_listener($event_type, $class, $method) {
+  Resque_Event::listen($event_type, array($class, $method));
+}
+

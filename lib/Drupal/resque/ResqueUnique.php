@@ -16,15 +16,18 @@ class ResqueUnique extends Resque {
   public function createUniqueItem($key, $data) {
     $token = NULL;
 
-    // Check to see if class name was specified in the data array.
-    if (!empty($data['class_name'])) {
-      $this->className = $data['class_name'];
-    }
     $queues = module_invoke_all('cron_queue_info');
     drupal_alter('cron_queue_info', $queues);
 
-    // Add the worker callback.
-    $data['worker_callback'] = $queues[$this->name]['worker callback'];
+    // Check to see if class name was specified in the data array.
+    if (!empty($queues[$this->name]['class'])) {
+      $this->className = $queues[$this->name]['class'];
+    }
+    elseif (!empty($data['worker_callback'])) {
+      // Add the worker callback.
+      $data['worker_callback'] = $queues[$this->name]['worker callback'];
+    }
+
     $data['drupal_unique_key'] = $this->name . ':' . $key;
     Resque_Event::listen(
       'beforeEnqueue',
