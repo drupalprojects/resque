@@ -1,4 +1,4 @@
-name = "Resque""
+name = "Resque"
 description = Resque queue backend.
 version = 6.x-1.x
 core = 6.x
@@ -9,3 +9,5 @@ files[] = lib/Drupal/resque/JobInterface.php
 files[] = lib/Drupal/resque/Resque.php
 files[] = lib/Drupal/resque/ResqueUnique.php
 files[] = lib/Drupal/resque/UniquePlugin.php
+files[] = lib/Drupal/resque/LockUnique.php
+files[] = lib/Drupal/resque/LockPlugin.php

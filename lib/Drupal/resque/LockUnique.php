@@ -6,11 +6,22 @@
 
 namespace Drupal\resque;
 
-use Resque as Php_Resque;
+use \Resque as Php_Resque;
 
+/**
+ * Defines the LockUnique functionality.
+ */
 class LockUnique extends Resque {
   /**
-   * {@inheritdoc}
+   * Create a unique item to be processed serially with PHP Resque.
+   *
+   * @param string $key
+   *   The key to lock the job with.
+   * @param array $data
+   *   The Resque_Job data.
+   *
+   * @return string
+   *   The status for enqueuing a Resque_Job.
    */
   public function createUniqueItem($key, $data) {
     // Check to see if class name was specified in the data array.
