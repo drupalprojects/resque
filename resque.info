@@ -11,3 +11,4 @@ files[] = lib/Drupal/resque/ResqueUnique.php
 files[] = lib/Drupal/resque/UniquePlugin.php
 files[] = lib/Drupal/resque/LockUnique.php
 files[] = lib/Drupal/resque/LockPlugin.php
+files[] = lib/Drupal/resque/QueuePlugin.php
